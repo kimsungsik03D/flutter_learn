@@ -56,32 +56,32 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
-        body: ListView.builder(
-          itemCount: postList.length,
-          itemBuilder: (BuildContext con, int index) {
-            return postConatiner(
-                title: postList[index]["title"] as String,
-                colorData: postList[index]["color"] as Color);
-          },
+        body: GridView(
+          scrollDirection: Axis.horizontal,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4, crossAxisSpacing: 15, mainAxisSpacing: 12),
+          children: [
+            postContainer(number: "1", colorData: Colors.red),
+            postContainer(number: "2", colorData: Colors.yellow),
+            postContainer(number: "3", colorData: Colors.lightBlue),
+            postContainer(number: "4", colorData: Colors.pink),
+            postContainer(number: "5", colorData: Colors.red),
+            postContainer(number: "6", colorData: Colors.yellow),
+            postContainer(number: "7", colorData: Colors.lightBlue),
+            postContainer(number: "8", colorData: Colors.pink),
+            postContainer(number: "9", colorData: Colors.red),
+            postContainer(number: "10", colorData: Colors.yellow),
+            postContainer(number: "11", colorData: Colors.lightBlue),
+            postContainer(number: "12", colorData: Colors.pink),
+          ],
         ));
   }
 
-  Widget postConatiner({String title = "", Color colorData = Colors.blue}) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
-        padding: const EdgeInsets.all(10),
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      Container(
-          width: MediaQuery.of(context).size.width,
-          height: 200,
-          color: colorData),
-    ]);
+  Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
+    return Container(
+      height: 200,
+      color: colorData,
+      child: Center(child: Text("Box $number")),
+    );
   }
 }
