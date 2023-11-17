@@ -45,36 +45,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var postList = [
-    {"title": "Sample Title 1", "color": Colors.red},
-    {"title": "Sample Title 2", "color": Colors.yellow},
-    {"title": "Sample Title 3", "color": Colors.lightBlue},
-    {"title": "Sample Title 4", "color": Colors.pink},
-    {"title": "Sample Title 5", "color": Colors.purple},
-    {"title": "Sample Title 6", "color": Colors.black}
+    {"number": "Title 1", "color": Colors.red},
+    {"number": "Title 2", "color": Colors.yellow},
+    {"number": "Title 3", "color": Colors.lightBlue},
+    {"number": "Title 4", "color": Colors.pink},
+    {"number": "Title 5", "color": Colors.red},
+    {"number": "Title 6", "color": Colors.yellow},
+    {"number": "Title 7", "color": Colors.lightBlue},
+    {"number": "Title 8", "color": Colors.red},
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("text Title")),
-        body: GridView(
-          scrollDirection: Axis.horizontal,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4, crossAxisSpacing: 15, mainAxisSpacing: 12),
-          children: [
-            postContainer(number: "1", colorData: Colors.red),
-            postContainer(number: "2", colorData: Colors.yellow),
-            postContainer(number: "3", colorData: Colors.lightBlue),
-            postContainer(number: "4", colorData: Colors.pink),
-            postContainer(number: "5", colorData: Colors.red),
-            postContainer(number: "6", colorData: Colors.yellow),
-            postContainer(number: "7", colorData: Colors.lightBlue),
-            postContainer(number: "8", colorData: Colors.pink),
-            postContainer(number: "9", colorData: Colors.red),
-            postContainer(number: "10", colorData: Colors.yellow),
-            postContainer(number: "11", colorData: Colors.lightBlue),
-            postContainer(number: "12", colorData: Colors.pink),
-          ],
-        ));
+      appBar: AppBar(title: const Text("text Title")),
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 12),
+        itemCount: postList.length,
+        itemBuilder: (BuildContext con, int index) {
+          return postContainer(
+              number: postList[index]["number"] as String,
+              colorData: postList[index]["color"] as Color);
+        },
+      ),
+    );
   }
 
   Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
