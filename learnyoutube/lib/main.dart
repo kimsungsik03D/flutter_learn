@@ -44,21 +44,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var postList = [
+    {"title": "Sample Title 1", "color": Colors.red},
+    {"title": "Sample Title 2", "color": Colors.yellow},
+    {"title": "Sample Title 3", "color": Colors.lightBlue},
+    {"title": "Sample Title 4", "color": Colors.pink},
+    {"title": "Sample Title 5", "color": Colors.purple},
+    {"title": "Sample Title 6", "color": Colors.black}
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("text Title")),
-      body: ListView(
-        // scrollDirection: Axis.horizontal,
-        children: [
-          postConatiner(title: "title 1", colorData: Colors.red),
-          postConatiner(title: "title 2", colorData: Colors.yellow),
-          postConatiner(title: "title 3", colorData: Colors.green),
-          postConatiner(title: "title 4", colorData: Colors.grey),
-          postConatiner(title: "title 5", colorData: Colors.purple)
-        ],
-      ),
-    );
+        appBar: AppBar(title: const Text("text Title")),
+        body: ListView.builder(
+          itemCount: postList.length,
+          itemBuilder: (BuildContext con, int index) {
+            return postConatiner(
+                title: postList[index]["title"] as String,
+                colorData: postList[index]["color"] as Color);
+          },
+        ));
   }
 
   Widget postConatiner({String title = "", Color colorData = Colors.blue}) {
