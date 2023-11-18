@@ -58,58 +58,88 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
-        body: SingleChildScrollView(
-          child: Column(
+        body: Container(
+          child: Stack(
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 3,
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      color: Colors.green,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      color: Colors.red,
-                    ),
-                  ]),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.amber,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 3,
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      color: Colors.blue,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      color: Colors.purple,
-                    ),
-                  ]),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.green,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 3,
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      color: Colors.blue,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      color: Colors.purple,
-                    ),
-                  ]),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.red,
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.amber,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.green,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.red,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.amber,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.green,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  color: Colors.red,
                 ),
               ),
             ],
