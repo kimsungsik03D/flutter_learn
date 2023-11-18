@@ -61,67 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Container(
           child: Stack(
             children: [
-              Align(
-                alignment: Alignment.topCenter,
+              Container(
                 child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.amber,
-                ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.green,
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.red,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: Colors.black26,
                 ),
               ),
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.amber,
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.green,
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.red,
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.amber,
+                  width: 200,
+                  height: 70,
+                  color: Colors.lightBlue[200],
                 ),
               ),
               Align(
@@ -129,17 +81,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   width: 100,
                   height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.green,
+                  margin: const EdgeInsets.only(left: 40, bottom: 150),
+                  color: Colors.amber,
                 ),
               ),
               Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.bottomLeft,
                 child: Container(
-                  width: 100,
-                  height: 100,
-                  alignment: Alignment.center,
-                  color: Colors.red,
+                  width: MediaQuery.of(context).size.width,
+                  height: 150,
+                  color: Colors.brown,
                 ),
               ),
             ],
