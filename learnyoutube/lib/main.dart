@@ -57,18 +57,64 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("text Title")),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 12),
-        itemCount: postList.length,
-        itemBuilder: (BuildContext con, int index) {
-          return postContainer(
-              number: postList[index]["number"] as String,
-              colorData: postList[index]["color"] as Color);
-        },
-      ),
-    );
+        appBar: AppBar(title: const Text("text Title")),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3,
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      color: Colors.green,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      color: Colors.red,
+                    ),
+                  ]),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3,
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      color: Colors.blue,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      color: Colors.purple,
+                    ),
+                  ]),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3,
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      color: Colors.blue,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      color: Colors.purple,
+                    ),
+                  ]),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
