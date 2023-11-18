@@ -59,42 +59,25 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
         body: Container(
-          child: Stack(
-            children: [
-              Container(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  color: Colors.black26,
-                ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: 200,
-                  height: 70,
-                  color: Colors.lightBlue[200],
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  margin: const EdgeInsets.only(left: 40, bottom: 150),
-                  color: Colors.amber,
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 150,
-                  color: Colors.brown,
-                ),
-              ),
-            ],
-          ),
+          child: Center(
+              child: TextButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext con) {
+                    return AlertDialog(
+                      title: const Text("Dailog TItle"),
+                      content: Container(child: const Text("Dailog Content")),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text("Close"))
+                      ],
+                    );
+                  });
+            },
+            child: const Text("Button"),
+          )),
         ));
   }
 
