@@ -61,18 +61,31 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
         body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              gradient: RadialGradient(
-                  colors: [
-                    Colors.blue[100] as Color,
-                    Colors.blue[300] as Color,
-                    Colors.blue[500] as Color,
-                  ],
-                  radius: 1.0,
-                  stops: const [0.1, 0.5, 1.0])),
-        ));
+            child: Column(
+          children: [
+            Center(
+              child: ElevatedButton(
+                onPressed: () => print("ElevatedButton"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.amber,
+                    textStyle: const TextStyle(fontSize: 10)),
+                child: const Text("ElevatedButton"),
+              ),
+            ),
+            Center(
+              child: TextButton(
+                onPressed: () => print("TextButton"),
+                child: const Text("TextButton"),
+              ),
+            ),
+            Center(
+              child: OutlinedButton(
+                onPressed: () => print("OutlinedButton"),
+                child: const Text("OutlinedButton"),
+              ),
+            )
+          ],
+        )));
   }
 
   Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
