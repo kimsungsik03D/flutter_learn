@@ -61,15 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
         body: Container(
-          child: Row(
+          child: Column(
             children: [
-              Flexible(
+              Expanded(
                 flex: 1,
-                child: Container(height: 150, color: Colors.purple),
+                child: Container(color: Colors.purple),
               ),
-              Flexible(
-                flex: 3,
-                child: Container(height: 150, color: Colors.green),
+              Expanded(
+                flex: 1,
+                child: Container(color: Colors.green),
               ),
               // Container(width: 150, height: 150, color: Colors.blue),
               // Container(width: 150, height: 150, color: Colors.red)
