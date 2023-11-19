@@ -60,10 +60,21 @@ class _MyHomePageState extends State<MyHomePage> {
         "https://cdn.pixabay.com/photo/2016/10/18/21/22/beach-1751455_960_720.jpg";
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
-        body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: const Image(image: NetworkImage(url), fit: BoxFit.fill),
+        body: Container(
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(height: 150, color: Colors.purple),
+              ),
+              Flexible(
+                flex: 3,
+                child: Container(height: 150, color: Colors.green),
+              ),
+              // Container(width: 150, height: 150, color: Colors.blue),
+              // Container(width: 150, height: 150, color: Colors.red)
+            ],
+          ),
         ));
   }
 
