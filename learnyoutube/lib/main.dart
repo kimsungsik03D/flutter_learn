@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learnyoutube/second.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -46,17 +46,45 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static String youtubeId = "iFt4sy8INMM";
-  final YoutubePlayerController _con = YoutubePlayerController(
-      initialVideoId: youtubeId,
-      flags: const YoutubePlayerFlags(autoPlay: true));
+  static Future loadJson() async {
+    final String response = await rootBundle.loadString("lib/users.json");
+
+    final data = await json.decode(response);
+    return data['users'];
+  }
+
+  Future userList = loadJson();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
         body: Container(
-          child: YoutubePlayer(controller: _con),
+          child: FutureBuilder(
+              future: userList,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                              "${snapshot.data[index]['id']}: ${snapshot.data[index]['username']}"),
+                        );
+                      });
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Error"),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  );
+                }
+              }),
         ));
   }
 
