@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnyoutube/second.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,32 +46,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var postList = [
-    {"number": "Title 1", "color": Colors.red},
-    {"number": "Title 2", "color": Colors.yellow},
-    {"number": "Title 3", "color": Colors.lightBlue},
-    {"number": "Title 4", "color": Colors.pink},
-    {"number": "Title 5", "color": Colors.red},
-    {"number": "Title 6", "color": Colors.yellow},
-    {"number": "Title 7", "color": Colors.lightBlue},
-    {"number": "Title 8", "color": Colors.red},
-  ];
+  static String youtubeId = "iFt4sy8INMM";
+  final YoutubePlayerController _con = YoutubePlayerController(
+      initialVideoId: youtubeId,
+      flags: const YoutubePlayerFlags(autoPlay: true));
+
   @override
   Widget build(BuildContext context) {
-    const String url =
-        "https://cdn.pixabay.com/photo/2016/10/18/21/22/beach-1751455_960_720.jpg";
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
-        body: Center(
-            child: GestureDetector(
-                onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const SecondView()),
-                    ),
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  child: const Text("get start"),
-                ))));
+        body: Container(
+          child: YoutubePlayer(controller: _con),
+        ));
   }
 
   Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
