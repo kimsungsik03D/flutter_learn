@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnyoutube/second.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,32 +61,16 @@ class _MyHomePageState extends State<MyHomePage> {
         "https://cdn.pixabay.com/photo/2016/10/18/21/22/beach-1751455_960_720.jpg";
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
-        body: Container(
-            child: Column(
-          children: [
-            Center(
-              child: ElevatedButton(
-                onPressed: () => print("ElevatedButton"),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
-                    textStyle: const TextStyle(fontSize: 10)),
-                child: const Text("ElevatedButton"),
-              ),
-            ),
-            Center(
-              child: TextButton(
-                onPressed: () => print("TextButton"),
-                child: const Text("TextButton"),
-              ),
-            ),
-            Center(
-              child: OutlinedButton(
-                onPressed: () => print("OutlinedButton"),
-                child: const Text("OutlinedButton"),
-              ),
-            )
-          ],
-        )));
+        body: Center(
+            child: GestureDetector(
+                onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SecondView()),
+                    ),
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  child: const Text("get start"),
+                ))));
   }
 
   Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
