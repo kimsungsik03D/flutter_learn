@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -46,46 +48,57 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static Future loadJson() async {
-    final String response = await rootBundle.loadString("lib/users.json");
+  late SharedPreferences _prefs;
+  String _username = "";
 
-    final data = await json.decode(response);
-    return data['users'];
+  final TextEditingController _usernameController = TextEditingController();
+
+  @override
+  // 시작시 자동 동작
+  void initState() {
+    super.initState();
+    _getusername();
   }
 
-  Future userList = loadJson();
+  _saveUsername() {
+    setState(() {
+      _username = _usernameController.text;
+      _prefs.setString("currentUsername", _username);
+      debugPrint('debug :$_username');
+    });
+  }
+
+  _getusername() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = _prefs.getString("currentUsername") ?? "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("text Title")),
         body: Container(
-          child: FutureBuilder(
-              future: userList,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.all(15),
-                          child: Text(
-                              "${snapshot.data[index]['id']}: ${snapshot.data[index]['username']}"),
-                        );
-                      });
-                } else if (snapshot.hasError) {
-                  return const Center(
-                    child: Text("Error"),
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  );
-                }
-              }),
-        ));
+            child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text("현자 사용자 이름 : $_username"),
+            ),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: TextField(
+                  controller: _usernameController,
+                  textAlign: TextAlign.left,
+                  decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Input your username")),
+            ),
+            TextButton(
+                onPressed: () => _saveUsername(), child: const Text("저장"))
+          ],
+        )));
   }
 
   Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
