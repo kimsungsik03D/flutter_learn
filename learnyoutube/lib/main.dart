@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:learnyoutube/product.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,64 +45,70 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  int _selectedIndex = 0;
+class _MyHomePageState extends State<MyHomePage> {
+  late Future<List<Product>> productList;
+  Dio dio = Dio();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(
-        () => setState(() => _selectedIndex = _tabController.index));
+    productList = getProductData();
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  Future<List<Product>> getProductData() async {
+    late List<Product> products;
+
+    try {
+      var response = await dio.get("https://dummyjson.com/products");
+
+      products = response.data['products']
+          .map<Product>((json) => Product.fromJson(json))
+          .toList();
+    } catch (e) {
+      print(e);
+    }
+    return products;
+  }
+
+  Future<void> refreshData() async {
+    productList = getProductData();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("text Title")),
-      body: _selectedIndex == 0
-          ? tabContainer(context, Colors.indigo, "FeiendsTab")
-          : _selectedIndex == 1
-              ? tabContainer(context, Colors.amber, "Chats tab")
-              : tabContainer(context, Colors.blueGrey, "Settings Tabs"),
-      bottomNavigationBar: SizedBox(
-        height: 90,
-        child:
-            TabBar(controller: _tabController, labelColor: Colors.black, tabs: [
-          Tab(
-            icon: Icon(
-                _selectedIndex == 0 ? Icons.person : Icons.person_2_outlined),
-            text: "Friends",
-          ),
-          Tab(
-            icon: Icon(_selectedIndex == 1 ? Icons.chat : Icons.chat_outlined),
-            text: "Chats",
-          ),
-          Tab(
-            icon: Icon(
-                _selectedIndex == 2 ? Icons.settings : Icons.settings_outlined),
-            text: "Settings",
-          ),
-        ]),
+      body: RefreshIndicator(
+        onRefresh: () => refreshData(),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: FutureBuilder<List<Product>>(
+              future: productList,
+              builder: (BuildContext con, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2));
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext cont, int index) {
+                      var data = snapshot.data[index];
+                      return Container(
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.black26),
+                        ),
+                        child: Text("${data.title} (${data.description})"),
+                      );
+                    },
+                  );
+                }
+              }),
+        ),
       ),
     );
-  }
-
-  Widget tabContainer(BuildContext con, Color tabColor, String tabText) {
-    return Container(
-        width: MediaQuery.of(con).size.width,
-        height: MediaQuery.of(con).size.height,
-        color: tabColor,
-        child: Center(
-            child: Text(tabText, style: const TextStyle(color: Colors.black))));
   }
 }
