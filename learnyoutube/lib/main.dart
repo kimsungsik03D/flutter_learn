@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,65 +43,64 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  late SharedPreferences _prefs;
-  String _username = "";
-
-  final TextEditingController _usernameController = TextEditingController();
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  int _selectedIndex = 0;
 
   @override
-  // 시작시 자동 동작
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _getusername();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(
+        () => setState(() => _selectedIndex = _tabController.index));
   }
 
-  _saveUsername() {
-    setState(() {
-      _username = _usernameController.text;
-      _prefs.setString("currentUsername", _username);
-      debugPrint('debug :$_username');
-    });
-  }
-
-  _getusername() async {
-    _prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _username = _prefs.getString("currentUsername") ?? "";
-    });
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("text Title")),
-        body: Container(
-            child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text("현자 사용자 이름 : $_username"),
-            ),
-            Container(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                  controller: _usernameController,
-                  textAlign: TextAlign.left,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Input your username")),
-            ),
-            TextButton(
-                onPressed: () => _saveUsername(), child: const Text("저장"))
-          ],
-        )));
+      appBar: AppBar(title: const Text("text Title")),
+      body: _selectedIndex == 0
+          ? tabContainer(context, Colors.indigo, "FeiendsTab")
+          : _selectedIndex == 1
+              ? tabContainer(context, Colors.amber, "Chats tab")
+              : tabContainer(context, Colors.blueGrey, "Settings Tabs"),
+      bottomNavigationBar: SizedBox(
+        height: 90,
+        child:
+            TabBar(controller: _tabController, labelColor: Colors.black, tabs: [
+          Tab(
+            icon: Icon(
+                _selectedIndex == 0 ? Icons.person : Icons.person_2_outlined),
+            text: "Friends",
+          ),
+          Tab(
+            icon: Icon(_selectedIndex == 1 ? Icons.chat : Icons.chat_outlined),
+            text: "Chats",
+          ),
+          Tab(
+            icon: Icon(
+                _selectedIndex == 2 ? Icons.settings : Icons.settings_outlined),
+            text: "Settings",
+          ),
+        ]),
+      ),
+    );
   }
 
-  Widget postContainer({String number = "0", Color colorData = Colors.amber}) {
+  Widget tabContainer(BuildContext con, Color tabColor, String tabText) {
     return Container(
-      height: 200,
-      color: colorData,
-      child: Center(child: Text("Box $number")),
-    );
+        width: MediaQuery.of(con).size.width,
+        height: MediaQuery.of(con).size.height,
+        color: tabColor,
+        child: Center(
+            child: Text(tabText, style: const TextStyle(color: Colors.black))));
   }
 }
