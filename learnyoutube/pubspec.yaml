@@ -39,6 +39,7 @@ dependencies:
   shared_preferences:
   rxdart:
   http:
+  provider:
 
 dev_dependencies:
   flutter_test:
