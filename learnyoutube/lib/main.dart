@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:learnyoutube/provider/album_provider.dart';
-import 'package:learnyoutube/view/album_pro_view.dart';
-import 'package:provider/provider.dart';
+import 'package:learnyoutube/locator/locatoer.dart';
+import 'package:learnyoutube/model/album_serv.dart';
+import 'package:learnyoutube/service/album_service.dart';
 
 void main() {
+  initLocator();
   runApp(const MyApp());
 }
 
@@ -14,9 +15,67 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: ChangeNotifierProvider<AlbumProvider>(
-      create: (context) => AlbumProvider(),
-      child: const AlbumProView(),
-    ));
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final AlbumService _service = locatoer<AlbumService>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: const Text("text Title")),
+        body: FutureBuilder(
+            future: _service.fetchAlbums(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<AlbumServ>? list = snapshot.data;
+                return ListView.builder(
+                    itemCount: list?.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: const EdgeInsets.all(10),
+                        child:
+                            Text('${list?[index].id}: ${list?[index].title} '),
+                      );
+                    });
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text('had Error'),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }));
   }
 }
