@@ -11,7 +11,7 @@ class AlbumProView extends StatefulWidget {
 }
 
 class _AlbumProViewState extends State<AlbumProView> {
-  late List<Album_pro> albumList;
+  late List<AlbumPro> albumList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
